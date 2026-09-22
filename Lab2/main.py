@@ -2,6 +2,7 @@ import os
 import tkinter as tk
 from tkinter import filedialog, messagebox
 
+from Tasks.task1 import Task1
 from Tasks.task2 import Task2
 
 
@@ -38,8 +39,11 @@ class MainWindow:
 			row=1, column=2, padx=10, pady=10
 		)
 
+		tk.Button(root, text="Запустить задание 1", command=self.run_task1).grid(
+			row=2, column=0, columnspan=3, padx=10, pady=10, sticky="ew"
+		)
 		tk.Button(root, text="Запустить задание 2", command=self.run_task2).grid(
-			row=2, column=0, columnspan=3, padx=10, pady=20, sticky="ew"
+			row=3, column=0, columnspan=3, padx=10, pady=20, sticky="ew"
 		)
 
 	def choose_image(self):
@@ -59,6 +63,21 @@ class MainWindow:
 		if path:
 			self.output_entry.delete(0, tk.END)
 			self.output_entry.insert(0, path)
+
+	def run_task1(self):
+		image_path = self.path_entry.get().strip()
+		output_path = self.output_entry.get().strip()
+		if not image_path or not os.path.isfile(image_path):
+			messagebox.showerror("Ошибка", "Выберите существующее изображение.")
+			return
+		if not output_path:
+			messagebox.showerror("Ошибка", "Укажите папку для результатов.")
+			return
+
+		self.output_path = output_path
+		os.makedirs(self.output_path, exist_ok=True)
+		task_window = tk.Toplevel(self.root)
+		Task1(task_window, self)
 
 	def run_task2(self):
 		image_path = self.path_entry.get().strip()
