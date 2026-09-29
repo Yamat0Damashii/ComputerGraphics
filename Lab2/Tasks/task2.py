@@ -86,3 +86,11 @@ class Task2:
 		if self.delete_button is not None:
 			self.delete_button.destroy()
 			self.delete_button = None
+
+
+if __name__ == "__main__":
+	from main import MainWindow
+
+	root = tk.Tk()
+	MainWindow(root)
+	root.mainloop()
