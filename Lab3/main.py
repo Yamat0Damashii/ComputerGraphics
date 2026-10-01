@@ -11,7 +11,7 @@ class Lab3:
         self.root = root
         self.root.title("Lab3")
         self.root.configure(bg=self.back_ground)
-        self.root.geometry("300x160+1+1")
+        self.root.geometry("300x80+1+1")
 
         # task2
         self.task2_button = tk.Button(
