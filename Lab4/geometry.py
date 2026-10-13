@@ -26,7 +26,7 @@ class Point:
     def __add__(self, o):  return Point(self.x + o.x, self.y + o.y)
     def __sub__(self, o):  return Point(self.x - o.x, self.y - o.y)
     def __mul__(self, k):  return Point(self.x * k, self.y * k)
-    __rmul__ = __mul__
+    
 
     def __eq__(self, o):
         return isinstance(o, Point) and self.dist(o) < EPS
