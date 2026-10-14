@@ -50,6 +50,7 @@ l_systems = [
 
 
 def generate_l_system(axiom, rules, iterations):
+    iterations = max(0, int(iterations))
     for _ in range(iterations):
         result = "".join(rules.get(char, char) for char in axiom)
         axiom = result
@@ -60,15 +61,14 @@ def points_l_system(l_system_index):
     system = l_systems[l_system_index]
     axiom = system["atom"]
     angle = system["angle"]
-    direction = system["start_direction"]
-    if default_iterations:
-        iterations = default_iterations
-    else:
-        iterations = system["iterations"]
+    direction = system.get("start_direction", default_start_direction)
+    iterations_count = default_iterations if default_iterations else 0
+    if iterations_count == 0 and "iterations" in system:
+        iterations_count = system["iterations"]
 
     rules = system["rules"]
 
-    instructions = generate_l_system(axiom, rules, iterations)
+    instructions = generate_l_system(axiom, rules, iterations_count)
     print(instructions)
 
     x, y = 0, 0
@@ -101,9 +101,15 @@ def points_l_system(l_system_index):
 
 
 def draw_by_points(points):
-    points = np.array(points)
-    points -= points.min(axis=0)
-    points /= points.max(axis=0)
+    points = np.array(points, dtype=float)
+    if points.size == 0:
+        return
+
+    min_point = points.min(axis=0)
+    points -= min_point
+    span = points.max(axis=0)
+    scale = np.where(span == 0, 1.0, span)
+    points /= scale
 
     plt.figure(figsize=(8, 8))
     plt.plot(points[:, 0], points[:, 1], color="green")
