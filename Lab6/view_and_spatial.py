@@ -1,4 +1,3 @@
-"""Участник 3: преобразования вокруг центра/прямой, их UI, проекции и Canvas."""
 
 from __future__ import annotations
 

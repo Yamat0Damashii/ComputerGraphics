@@ -1,4 +1,3 @@
-"""Участник 2: перенос, обычный масштаб, осевые повороты и отражение, их UI."""
 
 import numpy as np
 from math import cos, sin, radians
