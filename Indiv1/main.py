@@ -118,7 +118,7 @@ def convex_polygon_intersection(
 	if polygon_signed_area(second_polygon) < 0:
 		second_polygon.reverse()
 
-	# Each record stores the crossing and its position on both polygon boundaries.
+	# Каждая запись хранит пересечение и его положение на обеих границах полигона.
 	crossings = []
 	for first_edge, first_start in enumerate(first_polygon):
 		first_end = first_polygon[(first_edge + 1) % len(first_polygon)]
