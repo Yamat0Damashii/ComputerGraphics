@@ -72,6 +72,10 @@ class ModelViewer:
         ttk.Button(
             revolution_frame, text="Построить фигуру", command=self.create_revolution
         ).pack(fill=tk.X, pady=(6, 0))
+        ttk.Button(
+            revolution_frame, text="Построить тело вращения из OBJ",
+            command=self.create_revolution_from_obj,
+        ).pack(fill=tk.X, pady=(5, 0))
 
         surface_frame = ttk.LabelFrame(
             controls, text="Задание 3 — Поверхность z = f(x, y)", padding=8
@@ -219,6 +223,22 @@ class ModelViewer:
             )
         except (ValueError, OverflowError) as error:
             messagebox.showerror("Ошибка построения фигуры", str(error))
+            return
+        self._set_model(model)
+
+    def create_revolution_from_obj(self):
+        filename = filedialog.askopenfilename(
+            title="Выберите OBJ-фигуру для вращения",
+            filetypes=(("OBJ files", "*.obj"), ("All files", "*.*")),
+        )
+        if not filename:
+            return
+        try:
+            model = SurfaceOfRevolution.create_from_obj(
+                filename, self.axis_var.get(), int(self.segments_var.get())
+            )
+        except (OSError, ValueError, OverflowError) as error:
+            messagebox.showerror("Ошибка построения из OBJ", str(error))
             return
         self._set_model(model)
 
